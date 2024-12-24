@@ -13,10 +13,10 @@ const Header = () => {
     useState(false);
 
   const navItems = [
+    { label: "Home", href: "/" },
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Tests", href: "/tests" },
-    { label: "Results", href: "/results" },
-    { label: "Analytics", href: "/analytics" },
+    { label: "Tests", href: "/candidate-login" },
+    { label: "Questions", href: "/questions" },
   ];
 
   return (

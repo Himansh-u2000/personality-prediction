@@ -9,6 +9,9 @@ import {
 } from "react-router-dom";
 import PDFAnalyzer from "./components/PDFAnalyzer";
 import Header from "./components/Header/Header";
+import StudentResults from "./components/StudentResults";
+import GeminiChat from "./components/GeminiChat";
+import CandidateLogin from "./components/CandidateLogin";
 function App() {
   return (
     <>
@@ -20,7 +23,7 @@ function App() {
             element={<ResumeAnalyzer />}
           />
           <Route
-            path="/dashboard"
+            path="/questions"
             element={<AdminDashboard />}
           />
           <Route
@@ -30,6 +33,18 @@ function App() {
           <Route
             path="/Pdf-to-text"
             element={<PDFAnalyzer />}
+          />
+          <Route
+            path="/candidate-login"
+            element={<CandidateLogin />}
+          />
+          <Route
+            path="/dashboard"
+            element={<StudentResults />}
+          />
+          <Route
+            path="/gemini-chat"
+            element={<GeminiChat />}
           />
         </Routes>
       </Router>
