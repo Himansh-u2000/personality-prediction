@@ -23,6 +23,8 @@ const GeminiChat = () => {
   const [isLoading, setIsLoading] =
     useState(false);
   const messagesEndRef = useRef(null);
+  const API_KEY =
+    "AIzaSyAy_iW2jpiMW1UgjUyjqlMaHxXdLmRmj0I";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({
@@ -37,7 +39,7 @@ const GeminiChat = () => {
   const callGeminiAPI = async (message) => {
     try {
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
         {
           method: "POST",
           headers: {
@@ -53,17 +55,33 @@ const GeminiChat = () => {
                 ],
               },
             ],
-            key: "AIzaSyAy_iW2jpiMW1UgjUyjqlMaHxXdLmRmj0I",
           }),
         }
       );
 
+      if (!response.ok) {
+        throw new Error(
+          `HTTP error! status: ${response.status}`
+        );
+      }
+
       const data = await response.json();
-      return data.candidates[0].content.parts[0]
-        .text;
+
+      if (
+        data.candidates &&
+        data.candidates[0]?.content?.parts?.[0]
+          ?.text
+      ) {
+        return data.candidates[0].content.parts[0]
+          .text;
+      } else {
+        throw new Error(
+          "Unexpected API response structure"
+        );
+      }
     } catch (error) {
       console.error("Error:", error);
-      return "Sorry, I encountered an error. Please try again.";
+      return `Sorry, I encountered an error: ${error.message}. Please try again.`;
     }
   };
 
@@ -71,7 +89,7 @@ const GeminiChat = () => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
 
-    const userMessage = inputMessage;
+    const userMessage = inputMessage.trim();
     setInputMessage("");
     setMessages((prev) => [
       ...prev,
@@ -79,14 +97,25 @@ const GeminiChat = () => {
     ]);
     setIsLoading(true);
 
-    const response = await callGeminiAPI(
-      userMessage
-    );
-    setIsLoading(false);
-    setMessages((prev) => [
-      ...prev,
-      { text: response, isUser: false },
-    ]);
+    try {
+      const response = await callGeminiAPI(
+        userMessage
+      );
+      setMessages((prev) => [
+        ...prev,
+        { text: response, isUser: false },
+      ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "Sorry, something went wrong. Please try again.",
+          isUser: false,
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
