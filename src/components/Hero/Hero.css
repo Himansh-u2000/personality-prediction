@@ -1,0 +1,52 @@
+#scroll-container {
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+}
+
+.scroll-text {
+  height: 100%;
+  text-align: center;
+  animation: scroll-up-down 16s linear infinite; /* Slower animation duration */
+  position: absolute;
+}
+
+/* Add unique animation delays for each scroll-text */
+.delay-0 {
+  animation-delay: 0s;
+}
+.delay-1 {
+  animation-delay: 2s; /* Adjust delay to distribute images evenly */
+}
+.delay-2 {
+  animation-delay: 0s;
+}
+.delay-3 {
+  animation-delay: 6s;
+}
+
+/* Keyframes for scrolling up and down */
+@keyframes scroll-up-down {
+  0% {
+    transform: translateY(0); /* Start position */
+  }
+  25% {
+    transform: translateY(
+      -50%
+    ); /* Image fully visible */
+  }
+  50% {
+    transform: translateY(
+      -120%
+    ); /* Transition out */
+  }
+  75% {
+    transform: translateY(
+      -50%
+    ); /* Maintain transition for next image */
+  }
+  100% {
+    transform: translateY(0); /* Loop back */
+  }
+}

@@ -7,6 +7,7 @@ import {
   Search,
   Bell,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] =
@@ -46,30 +47,6 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Desktop Right Section */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button className="p-2 text-gray-400 hover:text-gray-500">
-              <Search className="h-5 w-5" />
-            </button>
-            <button className="p-2 text-gray-400 hover:text-gray-500 relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
-            </button>
-            <div className="border-l pl-4 flex items-center space-x-4">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
-                <User className="h-5 w-5" />
-                <span>Profile</span>
-              </button>
-              <button
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-                style={{ color: "#4A628A" }}
-              >
-                <LogOut className="h-5 w-5" />
-                <span>Logout</span>
-              </button>
-            </div>
-          </div>
-
           {/* Mobile menu button */}
           <div className="flex md:hidden">
             <button
@@ -104,38 +81,6 @@ const Header = () => {
                 {item.label}
               </a>
             ))}
-            <div className="border-t border-gray-200 pt-4 pb-3">
-              <div className="flex items-center px-4">
-                <div className="flex-shrink-0">
-                  <User className="h-8 w-8 rounded-full" />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    User Name
-                  </div>
-                  <div className="text-sm font-medium text-gray-500">
-                    user@example.com
-                  </div>
-                </div>
-                <button className="ml-auto flex-shrink-0 p-1 text-gray-400 hover:text-gray-500">
-                  <Bell className="h-6 w-6" />
-                </button>
-              </div>
-              <div className="mt-3 space-y-1">
-                <a
-                  href="/profile"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-                >
-                  Profile
-                </a>
-                <a
-                  href="/logout"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100"
-                >
-                  Logout
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       )}

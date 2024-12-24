@@ -12,6 +12,7 @@ import Header from "./components/Header/Header";
 import StudentResults from "./components/StudentResults";
 import GeminiChat from "./components/GeminiChat";
 import CandidateLogin from "./components/CandidateLogin";
+import Hero from "./components/Hero/Hero";
 function App() {
   return (
     <>
@@ -20,7 +21,11 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<ResumeAnalyzer />}
+            element={<Hero />}
+          />
+          <Route
+          path="/resume-analyzer"
+          element={<ResumeAnalyzer />}
           />
           <Route
             path="/questions"
