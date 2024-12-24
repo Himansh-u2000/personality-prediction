@@ -1,18 +1,18 @@
-import React from "react";
-import ResumeAnalyzer from "./components/ResumeAnalyzer";
-import { AdminDashboard } from "./components/AdminDashboard";
-import PersonalityTest from "./components/PersonalityTest";
+import "@radix-ui/themes/styles.css";
 import {
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
 } from "react-router-dom";
-import PDFAnalyzer from "./components/PDFAnalyzer";
-import Header from "./components/Header/Header";
-import StudentResults from "./components/StudentResults";
-import GeminiChat from "./components/GeminiChat";
+import { AdminDashboard } from "./components/AdminDashboard";
 import CandidateLogin from "./components/CandidateLogin";
+import GeminiChat from "./components/GeminiChat";
+import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
+import PDFAnalyzer from "./components/PDFAnalyzer";
+import PersonalityTest from "./components/PersonalityTest";
+import ResumeAnalyzer from "./components/ResumeAnalyzer";
+import StudentResults from "./components/StudentResults";
 
 function App() {
   return (

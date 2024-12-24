@@ -97,7 +97,7 @@ const CandidateLogin = () => {
       // Redirect to personality test
       console.log("Login successful:", formData);
 
-      window.location.href = "/tests";
+      // window.location.href = "/tests";
     } catch (err) {
       setError(
         "An error occurred. Please try again."
@@ -254,6 +254,9 @@ const CandidateLogin = () => {
                 backgroundColor: "#4A628A",
               }}
               disabled={loading}
+              onClick={() => {
+                window.location.href = "/tests";
+              }}
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
