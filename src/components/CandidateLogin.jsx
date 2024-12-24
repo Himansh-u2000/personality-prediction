@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   User,
   Mail,
@@ -92,8 +93,6 @@ const CandidateLogin = () => {
       //   headers: { 'Content-Type': 'application/json' },
       //   body: JSON.stringify(formData)
       // });
-
-      
 
       // Redirect to personality test
       console.log("Login successful:", formData);
@@ -271,8 +270,8 @@ const CandidateLogin = () => {
             </button>
 
             <div className="text-center">
-              <button
-                type="button"
+              <Link
+                to="#"
                 className="text-sm text-gray-600 hover:text-gray-900"
                 onClick={() => {
                   setIsLogin(!isLogin);
@@ -289,7 +288,7 @@ const CandidateLogin = () => {
                 {isLogin
                   ? "Don't have an account? Sign up"
                   : "Already have an account? Sign in"}
-              </button>
+              </Link>
             </div>
           </form>
         </CardContent>
