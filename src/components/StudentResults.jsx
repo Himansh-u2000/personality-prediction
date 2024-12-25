@@ -24,48 +24,53 @@ import {
 
 const StudentResults = () => {
   // Sample data - replace with actual data from your backend
-  const initialData = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      date: "2024-03-20",
-      score: 85,
-      department: "Engineering",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      date: "2024-03-19",
-      score: 92,
-      department: "Business",
-    },
-    {
-      id: 3,
-      name: "Mike Johnson",
-      email: "mike@example.com",
-      date: "2024-03-18",
-      score: 78,
-      department: "Arts",
-    },
-    {
-      id: 4,
-      name: "Sarah Williams",
-      email: "sarah@example.com",
-      date: "2024-03-17",
-      score: 95,
-      department: "Science",
-    },
-    {
-      id: 5,
-      name: "Alex Brown",
-      email: "alex@example.com",
-      date: "2024-03-16",
-      score: 88,
-      department: "Engineering",
-    },
-  ];
+  // const initialData = [
+  //   {
+  //     id: 1,
+  //     name: "John Doe",
+  //     email: "john@example.com",
+  //     date: "2024-03-20",
+  //     score: 85,
+  //     department: "Engineering",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Jane Smith",
+  //     email: "jane@example.com",
+  //     date: "2024-03-19",
+  //     score: 92,
+  //     department: "Business",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Mike Johnson",
+  //     email: "mike@example.com",
+  //     date: "2024-03-18",
+  //     score: 78,
+  //     department: "Arts",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Sarah Williams",
+  //     email: "sarah@example.com",
+  //     date: "2024-03-17",
+  //     score: 95,
+  //     department: "Science",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Alex Brown",
+  //     email: "alex@example.com",
+  //     date: "2024-03-16",
+  //     score: 88,
+  //     department: "Engineering",
+  //   },
+  // ];
+
+  const Sdata = JSON.parse(
+    localStorage.getItem("candidateData")
+  );
+  const initialData = Sdata;
 
   const [data, setData] = useState(initialData);
   const [searchTerm, setSearchTerm] =
@@ -81,23 +86,37 @@ const StudentResults = () => {
 
   // Calculate statistics
   const averageScore = Math.round(
-    data.reduce(
-      (acc, curr) => acc + curr.score,
-      0
-    ) / data.length
+    data.reduce((acc, student) => {
+      const s = (student.pdfScore + student.testScore) / 2;
+      return acc + s;
+    }, 0) / data.length
   );
   const highestScore = Math.max(
-    ...data.map((student) => student.score)
+    ...data.map((student) => {
+      const s =
+        (student.pdfScore + student.testScore) /
+        2;
+      return s;
+    })
   );
   const lowestScore = Math.min(
-    ...data.map((student) => student.score)
+    ...data.map((student) => {
+      const s =
+        (student.pdfScore + student.testScore) /
+        2;
+      return s;
+    })
   );
 
   // Chart data
-  const chartData = data.map((student) => ({
-    name: student.name.split(" ")[0],
-    score: student.score,
-  }));
+  const chartData = data.map((student) => {
+    let s = student.testScore + student.pdfScore;
+    s /= 2;
+    return {
+      name: student.email.split(" ")[0],
+      score: s,
+    };
+  });
 
   // Sorting function
   const handleSort = (key) => {
@@ -318,7 +337,7 @@ const StudentResults = () => {
                     Email
                   </th>
                   <th className="px-6 py-3 text-left">
-                    Department
+                    Test Score
                   </th>
                   <th className="px-6 py-3 text-left">
                     <button
@@ -327,7 +346,7 @@ const StudentResults = () => {
                         handleSort("date")
                       }
                     >
-                      Date
+                      Resume Score
                       <ChevronDown size={16} />
                     </button>
                   </th>
@@ -338,7 +357,7 @@ const StudentResults = () => {
                         handleSort("score")
                       }
                     >
-                      Score
+                      Total Score
                       <ChevronDown size={16} />
                     </button>
                   </th>
@@ -357,16 +376,17 @@ const StudentResults = () => {
                       {student.email}
                     </td>
                     <td className="px-6 py-4">
-                      {student.department}
+                      {student.testScore}%
                     </td>
                     <td className="px-6 py-4">
-                      {new Date(
-                        student.date
-                      ).toLocaleDateString()}
+                      {student.pdfScore}%
                     </td>
                     <td className="px-6 py-4">
                       <span className="font-semibold">
-                        {student.score}%
+                        {(student.testScore +
+                          student.pdfScore) /
+                          2}
+                        %
                       </span>
                     </td>
                   </tr>

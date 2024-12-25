@@ -32,6 +32,8 @@ const CandidateLogin = () => {
     password: "",
     department: "",
     studentId: "",
+    testScore: "",
+    pdfScore: "",
   });
 
   const departments = [
@@ -94,9 +96,15 @@ const CandidateLogin = () => {
       //   body: JSON.stringify(formData)
       // });
 
+      const obj =
+        JSON.parse(
+          localStorage.getItem("candidateData")
+        ) || [];
+      obj.push(formData);
+
       localStorage.setItem(
         "candidateData",
-        JSON.stringify(formData)
+        JSON.stringify(obj)
       );
 
       // Redirect to personality test

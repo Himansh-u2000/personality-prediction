@@ -1,25 +1,42 @@
 import React, { useState } from "react";
-import { Send, AlertCircle, ArrowRight, Sparkles } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Send,
+  AlertCircle,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
+import {
+  Alert,
+  AlertDescription,
+} from "@/components/ui/alert";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 
 const PDFAnalyzer = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [totalScore, setTotalScore] = useState("");
+  const [totalScore, setTotalScore] =
+    useState("");
   const [error, setError] = useState(null);
 
-  const API_KEY = "AIzaSyAy_iW2jpiMW1UgjUyjqlMaHxXdLmRmj0I";
+  const API_KEY =
+    "AIzaSyAy_iW2jpiMW1UgjUyjqlMaHxXdLmRmj0I";
 
   const analyzeText = async (text) => {
     if (!text.trim()) {
-      setError("Please enter some text to analyze");
+      setError(
+        "Please enter some text to analyze"
+      );
       return;
     }
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
@@ -43,22 +60,49 @@ const PDFAnalyzer = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(
+          `HTTP error! status: ${response.status}`
+        );
       }
 
       const data = await response.json();
-      
-      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-        const pdfScore = data.candidates[0].content.parts[0].text;
-        localStorage.setItem("pdfScore", pdfScore);
-        const storedScore = localStorage.getItem("candidateScore") || "0";
-        const result = parseInt(pdfScore) + parseInt(storedScore);
+
+      if (
+        data.candidates &&
+        data.candidates[0]?.content?.parts?.[0]
+          ?.text
+      ) {
+        const pdfScore =
+          data.candidates[0].content.parts[0]
+            .text;
+
+        const obj = JSON.parse(
+          localStorage.getItem("candidateData")
+        );
+        console.log("Before Change", obj);
+        obj[obj.length - 1].pdfScore =
+          parseInt(pdfScore);
+        console.log("After Change", obj);
+
+        localStorage.setItem(
+          "candidateData",
+          JSON.stringify(obj)
+        );
+
+        let result =
+          obj[obj.length - 1].pdfScore +
+          obj[obj.length - 1].testScore;
+        result /= 2;
         setTotalScore(result);
       } else {
-        throw new Error("Unexpected API response structure");
+        throw new Error(
+          "Unexpected API response structure"
+        );
       }
     } catch (err) {
-      setError(err.message || "Failed to analyze text");
+      setError(
+        err.message || "Failed to analyze text"
+      );
     } finally {
       setLoading(false);
     }
@@ -75,13 +119,18 @@ const PDFAnalyzer = () => {
                 Premium Text Analyzer
               </CardTitle>
             </div>
-            <p className="text-slate-500">Enter your text below for instant analysis and scoring</p>
+            <p className="text-slate-500">
+              Enter your text below for instant
+              analysis and scoring
+            </p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="relative">
               <textarea
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) =>
+                  setText(e.target.value)
+                }
                 placeholder="Write something here..."
                 className="w-full h-48 p-4 rounded-lg border border-slate-200 bg-white/50 backdrop-blur-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 resize-none"
               />
@@ -108,7 +157,10 @@ const PDFAnalyzer = () => {
             </div>
 
             {error && (
-              <Alert variant="destructive" className="bg-red-50 border-red-200">
+              <Alert
+                variant="destructive"
+                className="bg-red-50 border-red-200"
+              >
                 <AlertCircle className="h-4 w-4 text-red-600" />
                 <AlertDescription className="text-red-600">
                   {error}
@@ -120,14 +172,21 @@ const PDFAnalyzer = () => {
               <div className="mt-6 p-6 rounded-lg bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-100">
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
-                    <h3 className="text-lg font-semibold text-slate-700">Analysis Complete</h3>
-                    <p className="text-slate-500">Your text has been analyzed successfully</p>
+                    <h3 className="text-lg font-semibold text-slate-700">
+                      Analysis Complete
+                    </h3>
+                    <p className="text-slate-500">
+                      Your text has been analyzed
+                      successfully
+                    </p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                       {totalScore}
                     </div>
-                    <div className="text-sm text-slate-500">Total Score</div>
+                    <div className="text-sm text-slate-500">
+                      Total Score
+                    </div>
                   </div>
                 </div>
               </div>
