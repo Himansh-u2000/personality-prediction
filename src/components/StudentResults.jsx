@@ -23,50 +23,6 @@ import {
 } from "recharts";
 
 const StudentResults = () => {
-  // Sample data - replace with actual data from your backend
-  // const initialData = [
-  //   {
-  //     id: 1,
-  //     name: "John Doe",
-  //     email: "john@example.com",
-  //     date: "2024-03-20",
-  //     score: 85,
-  //     department: "Engineering",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Jane Smith",
-  //     email: "jane@example.com",
-  //     date: "2024-03-19",
-  //     score: 92,
-  //     department: "Business",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Mike Johnson",
-  //     email: "mike@example.com",
-  //     date: "2024-03-18",
-  //     score: 78,
-  //     department: "Arts",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Sarah Williams",
-  //     email: "sarah@example.com",
-  //     date: "2024-03-17",
-  //     score: 95,
-  //     department: "Science",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Alex Brown",
-  //     email: "alex@example.com",
-  //     date: "2024-03-16",
-  //     score: 88,
-  //     department: "Engineering",
-  //   },
-  // ];
-
   const Sdata = JSON.parse(
     localStorage.getItem("candidateData")
   );
@@ -87,7 +43,9 @@ const StudentResults = () => {
   // Calculate statistics
   const averageScore = Math.round(
     data.reduce((acc, student) => {
-      const s = (student.pdfScore + student.testScore) / 2;
+      const s =
+        (student.pdfScore + student.testScore) /
+        2;
       return acc + s;
     }, 0) / data.length
   );

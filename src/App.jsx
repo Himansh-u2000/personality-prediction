@@ -13,6 +13,7 @@ import PDFAnalyzer from "./components/PDFAnalyzer";
 import PersonalityTest from "./components/PersonalityTest";
 import ResumeAnalyzer from "./components/ResumeAnalyzer";
 import StudentResults from "./components/StudentResults";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           element={<GeminiChat />}
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }

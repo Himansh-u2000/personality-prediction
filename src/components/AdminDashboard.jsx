@@ -82,6 +82,7 @@ const AdminDashboard = () => {
   };
 
   return (
+    <div className="w-full bg-green-50 flex items-center justify-center">
     <div
       className="max-w-4xl mx-auto p-6"
       style={{ backgroundColor: "#DFF2EB" }}
@@ -218,6 +219,7 @@ const AdminDashboard = () => {
           </Card>
         ))}
       </div>
+    </div>
     </div>
   );
 };
