@@ -64,7 +64,6 @@ export default function Hero() {
           Discover Your True Self
           <br />
           with Our Personality Detection
-          <h3 className="text-[#15415c] font-semibold text-2xl"></h3>
         </h1>
         <h2 className="  text-lg font-semibold w-[32ch]">
           Unlock the Secrets of Your Personality
